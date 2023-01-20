@@ -1,0 +1,6 @@
+.elements__card{
+    padding: 22px 15px 10px 21px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

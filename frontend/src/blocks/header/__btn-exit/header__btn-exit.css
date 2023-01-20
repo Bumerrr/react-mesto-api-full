@@ -1,0 +1,18 @@
+.header__btn-exit {
+    color: #a9a9a9;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 22px;
+  }
+  
+  @media (max-width: 1080px) {
+    .header__btn-exit {
+      margin-right: 30px;
+    }
+  }
+  
+  @media (max-width: 633px) {
+    .header__btn-exit {
+      margin: 18px 0 40px;
+    }
+  }

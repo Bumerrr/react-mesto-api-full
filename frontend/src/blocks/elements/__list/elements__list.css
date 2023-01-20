@@ -1,0 +1,23 @@
+.elements__list{
+    list-style-type: none;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
+    grid-template-rows: 1fr 1fr;
+    gap: 20px 17px;
+}
+
+@media screen and (min-width: 619px) and (max-width: 1280px) {
+    .elements__list {
+      margin: auto;
+    }
+  }
+  
+    @media screen and (min-width: 320px) and (max-width: 618px) {
+      .elements__list {
+        margin: auto;
+      }
+    }

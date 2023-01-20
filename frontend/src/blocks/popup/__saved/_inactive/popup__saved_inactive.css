@@ -1,0 +1,4 @@
+.popup__saved_inactive{
+    background-color: transparent;
+    border: red 5px solid;
+}

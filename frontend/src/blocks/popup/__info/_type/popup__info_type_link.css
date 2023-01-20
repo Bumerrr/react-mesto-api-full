@@ -1,0 +1,8 @@
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+    .popup__info_type_link{
+      width: 238px;
+      margin: 0 22px;
+      margin-right: 0;
+    }
+  }

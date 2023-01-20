@@ -1,0 +1,18 @@
+.elements__card-button{
+    box-sizing: border-box;
+    width: 22px;
+    height: 19px;
+    background: url(../../../image/heart.svg) center no-repeat;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    transition: opacity 0.3s;
+    padding: 0;
+    margin: 0;
+}
+
+.elements__card-button:hover{
+    opacity: 0.5;
+}
