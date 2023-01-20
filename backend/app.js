@@ -13,12 +13,12 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { NotFoundError } = require('./errors');
 
-const { PORT = 3000, MONGO_URL = 'mongodb://localhost:27017/mestodb' } = process.env;
+const { PORT = 3000, MONGO_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 
 async function connect() {
   try {
     mongoose.set('strictQuery', false);
-    await mongoose.connect('mongodb://localhost:27017/mestodb');
+    await mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
     console.log(`server connect to ${MONGO_URL}`);
     app.listen(PORT);
     console.log(`server listen port ${PORT}`);
