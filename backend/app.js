@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const app = express();
 const rateLimit = require('express-rate-limit');
 const { errors } = require('celebrate');
+const cors = require('cors');
 const helmet = require('helmet');
 const usersRoutes = require('./routes/users');
 const cardsRoutes = require('./routes/cards');
@@ -15,6 +16,7 @@ const { NotFoundError } = require('./errors');
 
 const { PORT = 3000, MONGO_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 
+app.use(cors());
 async function connect() {
   try {
     mongoose.set('strictQuery', false);
