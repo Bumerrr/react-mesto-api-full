@@ -15,17 +15,23 @@ class AuthApi {
     return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
       headers: {
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ email, password })
     })
-    .then(res => this._handleResponse(res));
+    .then(res => this._handleResponse(res))
+    .then((data) => {
+      localStorage.setItem('jwt', data.token)
+      return data;
+    })
   }
 
   registerUser(email, password) {
     return fetch(`${this._baseUrl}/signup`, {
       method: 'POST',
       headers: {
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ email, password })
@@ -33,10 +39,12 @@ class AuthApi {
       .then(res => this._handleResponse(res));
   }
 
-  checkToken(token) {
+  checkToken() {
+    const token = localStorage.getItem('jwt');
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       headers: {
+        'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
@@ -46,6 +54,6 @@ class AuthApi {
 
 }
 
-const authApi = new AuthApi('https://auth.nomoreparties.co');
+const authApi = new AuthApi('http://localhost:3000'); // https://auth.nomoreparties.co
 
 export default authApi;

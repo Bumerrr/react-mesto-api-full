@@ -15,7 +15,7 @@ const {
 module.exports.getCards = (req, res, next) => {
   Card.find({})
     .populate(['owner', 'likes'])
-    .then((cards) => res.status(OK).send({ data: cards }))
+    .then((cards) => res.status(OK).send(cards))
     .catch(next);
 };
 
@@ -23,7 +23,7 @@ module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
   const owner = req.user._id;
   Card.create({ name, link, owner })
-    .then((card) => res.status(CREATED).send({ data: card }))
+    .then((card) => res.status(CREATED).send(card))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         return next(new BadRequestError('Переданы некорректные данные'));
@@ -35,6 +35,7 @@ module.exports.createCard = (req, res, next) => {
 module.exports.deleteCardById = (req, res, next) => {
   const { cardId } = req.params;
   Card.findById(cardId)
+    .populate(['likes', 'owner'])
     .orFail(() => {
       throw new NotFoundError('Карточка не найдена');
     })
@@ -56,11 +57,12 @@ module.exports.likeCard = (req, res, next) => {
     { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
     { new: true },
   )
+    .populate(['likes', 'owner'])
     .then((like) => {
       if (!like) {
         throw new NotFoundError('Передан несуществующий _id карточки.');
       }
-      res.send({ data: like });
+      res.send(like);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -80,7 +82,7 @@ module.exports.dislikeCard = (req, res, next) => {
       if (!like) {
         throw new NotFoundError('Передан несуществующий _id карточки.');
       }
-      res.send({ data: like });
+      res.send(like);
     })
     .catch((err) => {
       if (err.name === 'CastError') {

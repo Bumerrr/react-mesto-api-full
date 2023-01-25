@@ -23,7 +23,7 @@ module.exports.getUserMe = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('Пользователь не найден');
       }
-      res.send({ data: user });
+      res.send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -60,9 +60,7 @@ module.exports.updateUser = (req, res, next) => {
     { new: true, runValidators: true }, // данные будут валидированы перед изменением
   )
     .orFail(new Error('NotFound'))
-    .then((user) => res.status(OK).send(
-      { data: user },
-    ))
+    .then((user) => res.status(OK).send(user))
     .then(() => console.log('данные пользователя обновлены'))
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -85,7 +83,7 @@ module.exports.updateAvatar = (req, res, next) => {
     { new: true, runValidators: true }, // данные будут валидированы перед изменением
   )
     .orFail(new Error('NotFound'))
-    .then((user) => res.status(OK).send({ data: user }))
+    .then((user) => res.status(OK).send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         return next(new BadRequestError('Введены некорретные данные'));

@@ -6,7 +6,7 @@ function Header({ isLoggedIn, isProfileEmail, onLogout }) {
 
   return (
     <header className={`${isLoggedIn ? 'header' : 'header'}`}>
-      <a href="#"><img aria-label="Логотип Mesto Russia" className="header__logo" src={logo} /></a>
+        <img aria-label="Логотип Mesto Russia" className="header__logo" src={logo} />
       <Route path="/sign-in">
         <Link to='sign-up' className="header__link">Регистрация</Link>
       </Route>

@@ -25,6 +25,7 @@ function App() {
    const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
    const [selectedCard, setSelectedCard] = useState({ name: '', link: '' });
    const [isImagePopupOpen, setImagePopupOpen] = useState(false);
+   const [isDeletePopupOpen, setDeleteCardPopupOpen] = useState(false);
    const [currentUser, setCurrentUser] = useState({});
    const [isInfoTooltipSuccess, setIsInfoTooltipSuccess] = useState(false);
    const [isProfileEmail, setIsProfileEmail] = useState('')
@@ -46,6 +47,11 @@ function App() {
       setSelectedCard(card);
    }
 
+   function handleCardDeleteClick(card) {
+      setSelectedCard(card);
+      setDeleteCardPopupOpen(true);
+   }
+
    function handleEditProfileClick() {
       setIsEditProfilePopupOpen(true);
    }
@@ -64,6 +70,7 @@ function App() {
       setIsEditAvatarPopupOpen(false);
       setImagePopupOpen(false);
       setIsInfoTooltipPopupOpen(false);
+      setDeleteCardPopupOpen(false);
       setSelectedCard({});
    }
 
@@ -88,12 +95,24 @@ function App() {
    }
 
    function handleCardLike(card) {
-      const isLiked = card.likes.some(i => i._id === currentUser._id);
-      api.likeCard(card._id, !isLiked)
-         .then((newCard) => {
-            setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-         })
-         .catch((err) => console.log(err));
+      const isLiked = card.likes.some((id) => id === currentUser._id);
+      if (!isLiked) {
+         api.likeCard(card._id, !isLiked)
+            .then((newCard) => {
+               setCards((state) =>
+                  state.map((c) => (c._id === card._id ? newCard : c))
+               );
+            })
+            .catch((err) => console.log(err));
+      } else {
+         api.deleteLike(card._id, !isLiked)
+            .then((newCard) => {
+               setCards((state) =>
+                  state.map((c) => (c._id === card._id ? newCard : c))
+               );
+            })
+            .catch((err) => console.log(err));
+      }
    }
 
    function handleCardDelete(deleteCard) {
@@ -101,6 +120,7 @@ function App() {
          .then(() => {
             const newArr = (cards => cards.filter(card => card._id !== deleteCard._id));
             setCards(newArr);
+            closeAllPopups();
          })
          .then((res) => console.log(res, "Карточка удалена"))
          .catch((err) => console.log(err));
@@ -129,10 +149,10 @@ function App() {
    useEffect(() => {
       const jwt = localStorage.getItem('jwt');
       if (jwt) {
-         authApi.checkToken(jwt)
+         authApi.checkToken()
             .then(data => {
                if (data) {
-                  setIsProfileEmail(data.data.email)
+                  setIsProfileEmail(data.email)
                   setIsLoggedIn(true)
                   historyUse.push('/');
                   console.log("Вы уже авторизованы, рады вас видеть снова")
@@ -140,7 +160,7 @@ function App() {
             })
             .catch(error => { console.log(error) })
       }
-   }, [historyUse]);
+   }, [historyUse, isLoggedIn]);
 
    function handleLoginUser(email, password) {
       authApi.loginUser(email, password)
@@ -204,7 +224,8 @@ function App() {
                   onCardClick={handleCardClick}
                   cards={cards}
                   onCardLike={handleCardLike}
-                  onCardDelete={handleCardDelete}
+                  // onCardDelete={handleCardDelete}
+                  onCardDelete={handleCardDeleteClick}
                />
                <Route path="/sign-up">
                   <Register
@@ -237,7 +258,12 @@ function App() {
                onClose={closeAllPopups}
 
             />
-            <DeletePopup />
+            <DeletePopup
+               card={selectedCard}
+               onDeleteCard={handleCardDelete}
+               isOpen={isDeletePopupOpen}
+               onClose={closeAllPopups}
+            />
             <AvatarPopup
                isOpen={isEditAvatarPopupOpen}
                onClose={closeAllPopups}

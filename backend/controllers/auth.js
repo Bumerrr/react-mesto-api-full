@@ -1,4 +1,7 @@
+require('dotenv').config();
 /* eslint-disable consistent-return */
+
+const { NODE_ENV, JWT_SECRET } = process.env;
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
@@ -53,13 +56,15 @@ exports.login = (req, res, next) => {
           if (!matched) {
             return Promise.reject(new Error('Неправильные почта или пароль'));
           }
-          const token = jwt.sign({ _id: user._id }, 'super-strong-secret', { expiresIn: '7d' });
+          const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
+          // const token = jwt.sign({ _id: user._id }, 'super-strong-secret', { expiresIn: '7d' });
           res.status(201)
-            .cookie('jwt', token, {
-              maxAge: 3600000 * 24 * 7,
-              httpOnly: true,
-            })
-            .end();
+            .send({ token }); // 2 варианта
+          // .cookie('jwt', token, {
+          //   maxAge: 3600000 * 24 * 7,
+          //   httpOnly: true,
+          // })
+          // .end();
         })
         .catch((err) => {
           next(new UnauthorizedError(`Ошибка авторизации! : '${err}'`));

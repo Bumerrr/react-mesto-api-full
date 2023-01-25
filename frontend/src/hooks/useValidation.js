@@ -12,6 +12,7 @@ const useValidation = (value = '', validations, variableName) => {
 
   React.useEffect(() => {
     for (const validation in validations) {
+      // eslint-disable-next-line default-case
       switch (validation) {
         case 'isEmpty':
           if (value) {
