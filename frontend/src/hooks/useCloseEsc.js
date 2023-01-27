@@ -10,7 +10,7 @@ const useCloseEsc = (isOpen, closeAllPopups) => {
     }
     if (isOpen) document.addEventListener('keydown', handleCloseEsc);
     return () => document.removeEventListener('keydown', handleCloseEsc);
-  }, [isOpen]);
+  }, [closeAllPopups, isOpen]); // было только isOpen
 
 }
 

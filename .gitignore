@@ -11,7 +11,6 @@
 # production
 /build
 
-# misc
 .DS_Store
 .env.local
 .env.development.local
@@ -26,16 +25,18 @@ yarn-error.log*
 logs
 *.log
 npm-debug.log*
-
+.env
+# Dependency directory
+node_modules
 
 # Optional npm cache directory
 .npm
-
-build
-
-.env
 
 # Optional REPL history
 .DS_Store
 .idea
 .vscode
+
+build
+
+.env

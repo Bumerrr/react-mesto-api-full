@@ -1,6 +1,6 @@
 import React from 'react';
 
-function AuthForm(props) {
+function AuthForm({handleSubmit, isEmail, handleChangeEmail, inputPasswordError, inputEmailError, inputPasswordRide, handleChangePassword, isPassword, inputPasswordTouch, inputEmailRide, inputEmailTouch, ...props}) {
     return (
         <form
             className="auth"
@@ -8,9 +8,9 @@ function AuthForm(props) {
             name="signInForm"
             formNoValidate
         >
-            <h2 className="auth__title">{props.title}</h2>
+            <h2 className="auth__title">{'aaaaaaaaaaa'}</h2>
             <input
-                className={`auth__form ${!inputEmailRide && inputEmailTouch && 'auth__form_type_error'}`}
+                className={`auth__form ${!props.inputEmailRide && inputEmailTouch && 'auth__form_type_error'}`}
                 value={isEmail || ''}
                 onChange={handleChangeEmail}
                 placeholder="Email"

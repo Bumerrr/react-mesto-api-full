@@ -1,6 +1,6 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
-import {useRef, useState, useEffect} from 'react';
+import {useRef, useEffect} from 'react';
 
 function AvatarPopup(props) {
     const avatarRef = useRef();
