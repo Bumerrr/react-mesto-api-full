@@ -54,7 +54,6 @@ class AuthApi {
 
 }
 
-// const authApi = new AuthApi('http://localhost:3000'); // https://auth.nomoreparties.co 
 const authApi = new AuthApi('https://api.bizit.nomoredomains.rocks');
 
 export default authApi;
