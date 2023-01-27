@@ -64,7 +64,7 @@ exports.login = (req, res, next) => {
           //   maxAge: 3600000 * 24 * 7,
           //   httpOnly: true,
           // })
-          // .end();
+          // .end(); // способ куки
         })
         .catch((err) => {
           next(new UnauthorizedError(`Ошибка авторизации! : '${err}'`));

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import PopupWithForm from './PopupWithForm';
-// import {useFormAndValidation} from "../hooks/useFormAndValidation";
-// const {values, handleChange, errors, isValid, setValues, resetForm} = useFormAndValidation()
 
 function AddPopup(props) {
 
