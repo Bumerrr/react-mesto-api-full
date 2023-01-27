@@ -25,13 +25,7 @@ module.exports.getUserMe = (req, res, next) => {
       }
       res.send(user);
     })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new BadRequestError('Передан некорретный Id'));
-        return;
-      }
-      next(err);
-    });
+    .catch(next);
 };
 
 module.exports.getUserById = (req, res, next) => {
@@ -59,18 +53,12 @@ module.exports.updateUser = (req, res, next) => {
     { name, about },
     { new: true, runValidators: true }, // данные будут валидированы перед изменением
   )
-    .orFail(new Error('NotFound'))
+    .orFail(() => { next(new NotFoundError('Пользователь по указанному _id не найден.')); })
     .then((user) => res.status(OK).send(user))
-    .then(() => console.log('данные пользователя обновлены'))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         return next(new BadRequestError('Введены некорретные данные'));
       }
-
-      if (err.name === 'CastError') {
-        return next(new BadRequestError('Передан некорретный Id'));
-      }
-
       next(err);
     });
 };
@@ -82,17 +70,12 @@ module.exports.updateAvatar = (req, res, next) => {
     avatar,
     { new: true, runValidators: true }, // данные будут валидированы перед изменением
   )
-    .orFail(new Error('NotFound'))
+    .orFail(() => { next(new NotFoundError('Пользователь по указанному _id не найден.')); })
     .then((user) => res.status(OK).send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         return next(new BadRequestError('Введены некорретные данные'));
       }
-
-      if (err.name === 'CastError') {
-        return next(new BadRequestError('Передан некорретный Id'));
-      }
-
       next(err);
     });
 };
