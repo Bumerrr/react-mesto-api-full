@@ -10,7 +10,7 @@ class AuthApi {
       return Promise.reject(`Ошибка: ${result.status}`);
     }
   }
-  
+
   loginUser(email, password) {
     return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
