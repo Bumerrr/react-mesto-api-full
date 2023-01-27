@@ -33,13 +33,9 @@ export const popupAvatarOpenButton = document.querySelector(".profile__avatar-pe
 export const popupDeleteOpenButton = document.querySelector(".elements__delete");
 
 export const btnSavePopupSelector = document.querySelector(".form__save");
-// теперь картинки можно импортировать,
-// вебпак добавит в переменные правильные пути
 export const bmw = new URL('../image/bmw.jpg', import.meta.url);
 export const audi = new URL('../image/audi.jpg', import.meta.url);
 export const bmwRed = new URL('../image/bmwred.jpg', import.meta.url)
-// теперь картинки можно импортировать,
-// вебпак добавит в переменные правильные пути
 export const mers = new URL('../image/mers.jpg', import.meta.url);
 export const allCar = new URL('../image/allcar.jpg', import.meta.url);
 export const mst = new URL('../image/mst.jpg', import.meta.url)
