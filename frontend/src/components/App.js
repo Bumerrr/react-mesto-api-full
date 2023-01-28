@@ -114,18 +114,18 @@ function App() {
             .catch((err) => console.log(err));
       }
    }
-   
 
-   function handleCardDelete(deleteCard) {
-      api.deleteCard(deleteCard._id)
-         .then(() => {
-            const newArr = (cards => cards.filter(card => card._id !== deleteCard._id));
-            setCards(newArr);
-            closeAllPopups();
-         })
-         .then((res) => console.log(res, "Карточка удалена"))
-         .catch((err) => console.log(err));
-   }
+   function handleCardDelete(card) {
+      api
+        .deleteCard(card._id)
+        .then((newCard) => {
+          const newCards = cards.filter((c) =>c._id === card._id ? "" : newCard
+          );
+          setCards(newCards);
+          closeAllPopups();
+        })
+        .catch((err) => console.log(err));
+    }
 
    useEffect(() => {
       api.getCards()
