@@ -37,28 +37,30 @@ module.exports.createUser = (req, res, next) => {
     }).catch(next);
 };
 
-exports.login = (req, res, next) => {
+module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
-  User.findUserByCredentials(email, password)
+  return User.findUserByCredentials(email, password)
     .then((user) => {
-      if (!user) {
-        return Promise.reject(new Error('Неправильные почта или пароль'));
-      }
-      return bcrypt.compare(password, user.password)
-        .then((matched) => {
-          if (!matched) {
-            return Promise.reject(new Error('Неправильные почта или пароль'));
-          }
-          const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
-          // const token = jwt.sign({ _id: user._id }, 'super-strong-secret', { expiresIn: '7d' });
-          res.status(201)
-            .send({ token }); // 2 варианта
-          // .cookie('jwt', token, {
-          //   maxAge: 3600000 * 24 * 7,
-          //   httpOnly: true,
-          // })
-          // .end(); // способ куки
-        })
-        .catch(next);
-    });
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', {
+        expiresIn: '7d',
+      });
+      res.status(200).send({ token });
+    })
+    .catch(next);
 };
+
+// module.exports.login = (req, res, next) => {
+//   const { email, password } = req.body;
+//   return User.findUserByCredentials(email, password)
+//     .then((user) => {
+//       const token = jwt.sign({ _id: user._id }, 'super-strong-secret', { expiresIn: '7d' });
+//       res.status(200)
+//         .send({ token }) // 2 варианта
+//         .cookie('jwt', token, {
+//           maxAge: 3600000 * 24 * 7,
+//           httpOnly: true,
+//         })
+//         .end(); // способ куки
+//     })
+//     .catch(next);
+// };

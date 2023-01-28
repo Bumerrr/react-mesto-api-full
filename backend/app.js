@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -8,7 +7,6 @@ const rateLimit = require('express-rate-limit');
 const { errors } = require('celebrate');
 const cors = require('cors');
 const helmet = require('helmet');
-const corsErr = require('./middlewares/cors');
 const usersRoutes = require('./routes/users');
 const cardsRoutes = require('./routes/cards');
 const auth = require('./middlewares/auth');
@@ -52,7 +50,7 @@ app.use(authRoutes);
 app.use('/users', auth, usersRoutes);
 app.use('/cards', auth, cardsRoutes);
 app.use(errorLogger);
-app.use(corsErr);
+// app.use(corsErr);
 app.use('*', (req, res, next) => {
   next(new NotFoundError('Адреса по вашему запросу не существует'));
 });
