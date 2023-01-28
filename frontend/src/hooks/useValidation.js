@@ -6,13 +6,11 @@ const useValidation = (value = '', validations, variableName) => {
   const [isInputValid, setIsInputValid] = useState(false);
   const [isInputTouched, setIsInputTouched] = useState(false);
   const minLength = validations.minLength;
-  // eslint-disable-next-line no-useless-escape
   const regExpUrl = /(^https?:\/\/)?[a-z0-9~_\-\.]+\.[a-z]{2,9}(\/|:|\?[!-~]*)?$/i;
   const regExpEmail = /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i;
 
   React.useEffect(() => {
     for (const validation in validations) {
-      // eslint-disable-next-line default-case
       switch (validation) {
         case 'isEmpty':
           if (value) {
@@ -72,8 +70,7 @@ const useValidation = (value = '', validations, variableName) => {
 
     }
     if (isInputValid) setIsInputTouched(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+  }, [isInputValid, minLength, regExpEmail, regExpUrl, validations, value]);
 
   return {
     ['input' + variableName + 'Valid']: isInputValid,

@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-console */
 const User = require('../models/user');
 const {
   OK,
@@ -59,7 +57,7 @@ module.exports.updateUser = (req, res, next) => {
       if (err.name === 'ValidationError') {
         return next(new BadRequestError('Введены некорретные данные'));
       }
-      next(err);
+      return next(err);
     });
 };
 
@@ -76,6 +74,6 @@ module.exports.updateAvatar = (req, res, next) => {
       if (err.name === 'ValidationError') {
         return next(new BadRequestError('Введены некорретные данные'));
       }
-      next(err);
+      return next(err);
     });
 };

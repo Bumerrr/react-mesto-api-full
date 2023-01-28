@@ -1,5 +1,4 @@
 require('dotenv').config();
-/* eslint-disable consistent-return */
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 const jwt = require('jsonwebtoken');
@@ -32,7 +31,7 @@ module.exports.createUser = (req, res, next) => {
           if (err.name === 'ValidationError') {
             return next(new BadRequestError('Введены некорретные данные'));
           }
-          next(err);
+          return next(err);
         });
     }).catch(next);
 };

@@ -50,7 +50,6 @@ app.use(authRoutes);
 app.use('/users', auth, usersRoutes);
 app.use('/cards', auth, cardsRoutes);
 app.use(errorLogger);
-// app.use(corsErr);
 app.use('*', (req, res, next) => {
   next(new NotFoundError('Адреса по вашему запросу не существует'));
 });

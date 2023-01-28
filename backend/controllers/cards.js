@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-console */
 const Card = require('../models/card');
 const {
   OK,
@@ -28,7 +26,7 @@ module.exports.createCard = (req, res, next) => {
       if (err.name === 'ValidationError') {
         return next(new BadRequestError('Переданы некорректные данные'));
       }
-      next(err);
+      return next(err);
     });
 };
 
@@ -40,15 +38,21 @@ module.exports.deleteCardById = (req, res, next) => {
       throw new NotFoundError('Карточка не найдена');
     })
     .then((card) => {
-      if (!card.owner.equals(req.user._id)) {
+      if (!card.owner._id.equals(req.user._id)) {
         return next(new ForbiddenError('Вы не можете удалить чужую карточку'));
       }
       return card.remove()
         .then(() => {
           res.send({ message: 'Карточка удалена' });
-        });
+        })
+        .catch(next);
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        return next(new BadRequestError('Передан некорретный Id'));
+      }
+      return next(err);
+    });
 };
 
 module.exports.likeCard = (req, res, next) => {
@@ -68,7 +72,7 @@ module.exports.likeCard = (req, res, next) => {
       if (err.name === 'CastError') {
         return next(new BadRequestError('Передан некорректный Id'));
       }
-      next(err);
+      return next(err);
     });
 };
 
@@ -89,6 +93,6 @@ module.exports.dislikeCard = (req, res, next) => {
       if (err.name === 'CastError') {
         return next(new BadRequestError('Передан некорректный Id'));
       }
-      next(err);
+      return next(err);
     });
 };
