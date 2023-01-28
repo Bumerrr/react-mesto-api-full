@@ -47,8 +47,8 @@ function App() {
    }
 
    function handleCardDeleteClick(card) {
-      setSelectedCard(card);
       setDeleteCardPopupOpen(true);
+      setSelectedCard(card);
    }
 
    function handleEditProfileClick() {
