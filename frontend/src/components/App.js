@@ -95,7 +95,7 @@ function App() {
    }
 
    function handleCardLike(card) {
-      const isLiked = card.likes.some((id) => id === currentUser._id);
+      const isLiked = card.likes.some((i) => i._id === currentUser._id);
       if (!isLiked) {
          api.likeCard(card._id, !isLiked)
             .then((newCard) => {
@@ -114,6 +114,7 @@ function App() {
             .catch((err) => console.log(err));
       }
    }
+   
 
    function handleCardDelete(deleteCard) {
       api.deleteCard(deleteCard._id)
@@ -140,7 +141,6 @@ function App() {
       api.createCard(res)
          .then((res) => {
             setCards([res, ...cards]);
-            console.log(res);
             closeAllPopups();
          })
          .catch((err) => console.log(err));
